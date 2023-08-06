@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, jsonify, redirect, url_for
 import sqlite3
 import requests
+import random
 from login import create_admin_user, login_user
 
 app = Flask(__name__)
@@ -139,7 +140,7 @@ def obtener_jugadores(id_equipo):
         return jsonify({'error': 'Error al obtener los jugadores. Por favor, inténtalo nuevamente más tarde.'}), 500
 
 
-# Ruta para la página de predicción
+# Ruta para la página de predicción/partidos
 @app.route('/prediccion', methods=['GET'])
 def prediccion():
     return render_template('prediccion.html')
@@ -167,6 +168,7 @@ def obtener_champions_league():
     else:
         return jsonify({'error': 'Error al obtener las ligas. Por favor, inténtalo nuevamente más tarde.'}), 500
 
+
 # Ruta para obtener los equipos de la liga Champions League
 @app.route('/equipos_champions_league', methods=['GET'])
 def obtener_equipos_champions_league():
@@ -184,6 +186,56 @@ def obtener_equipos_champions_league():
     else:
         return jsonify({'error': 'Error al obtener los equipos de la liga Champions League. Por favor, inténtalo '
                                  'nuevamente más tarde.'}), 500
+
+
+@app.route('/generar_grupos', methods=['POST'])
+def generar_grupos():
+    equipos = request.form  # Obtener los datos del formulario enviado por el usuario
+
+    # Generar los grupos (puedes implementar aquí un algoritmo para dividir los equipos)
+    grupo_a = [equipos['grupo-a']]
+    grupo_b = [equipos['grupo-b']]
+
+    # Devolver los grupos generados en formato JSON
+    grupos = {'Grupo A': grupo_a, 'Grupo B': grupo_b}
+    return jsonify(grupos)
+
+
+@app.route('/generar_partidos', methods=['POST'])
+def generar_partidos():
+    grupos = {'Grupo A': [], 'Grupo B': []}
+
+    # Obtener los equipos seleccionados en el formulario
+    equipo_a = request.form['grupo-a']
+    equipo_b = request.form['grupo-b']
+
+    # Obtener los equipos de la liga Champions League
+    api_key = 'ee6af41696da40d5acb023e7a039ffc8'
+    url = f'https://api.football-data.org/v2/competitions/CL/teams'
+    headers = {'X-Auth-Token': api_key}
+
+    response = requests.get(url, headers=headers)
+
+    if response.status_code == 200:
+        data = response.json()
+        equipos = [{'name': equipo['name']} for equipo in data['teams']]
+    else:
+        return jsonify({'error': 'Error al obtener los equipos de la liga Champions League. Por favor, inténtalo nuevamente más tarde.'}), 500
+
+    # Mezclar aleatoriamente los equipos
+    random.shuffle(equipos)
+
+    # Dividir los equipos en los dos grupos
+    grupos['Grupo A'] = equipos[:10]
+    grupos['Grupo B'] = equipos[10:20]
+
+    # Generar los partidos aleatoriamente
+    partidos = []
+    for equipo_a, equipo_b in zip(grupos['Grupo A'], grupos['Grupo B']):
+        partido = {'local': equipo_a['name'], 'visitante': equipo_b['name']}
+        partidos.append(partido)
+
+    return jsonify(partidos)
 
 
 if __name__ == '__main__':

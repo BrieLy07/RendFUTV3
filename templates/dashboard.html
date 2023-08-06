@@ -38,8 +38,8 @@
         padding: 10px;
         color: #000111;
         font-size: 30px;
-        margin-right: 15px;
-        margin-top: 3px;
+        margin-right: 10px;
+        margin-top: 4px;
     }
 
     .menu {
@@ -72,7 +72,7 @@
         width: 25px;
         height: 25px;
         margin-top: 20px;
-        margin-left: -25px;
+        margin-left: -35px;
         margin-right: 10px;
     }
 
@@ -90,9 +90,9 @@
     <label class="bienvenido">RendFUT</label>
     <ul class="menu">
         <li class="li">
-            <a href="/dashboard" method="get">Home</a>
+            <a href="/dashboard" method="get">Inicio</a>
             <a href="/informacion" method="get">Información</a>
-            <a id="prediccion-form" href="/prediccion" method="get">Predicción</a>
+            <a id="prediccion-form" href="/prediccion" method="get">Partidos</a>
         </li>
     </ul>
     <ul class="dropdown">
@@ -121,7 +121,7 @@
         display: flex;
         justify-content: center;
         height: 480px;
-        width: 1600px;
+        width: 1350px;
         margin: auto;
         background-color: #7CAA98;
         background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100%25' height='100%25' viewBox='0 0 1200 800'%3E%3Cdefs%3E%3CradialGradient id='a' cx='0' cy='800' r='800' gradientUnits='userSpaceOnUse'%3E%3Cstop offset='0' stop-color='%239ac19c'/%3E%3Cstop offset='1' stop-color='%239ac19c' stop-opacity='0'/%3E%3C/radialGradient%3E%3CradialGradient id='b' cx='1200' cy='800' r='800' gradientUnits='userSpaceOnUse'%3E%3Cstop offset='0' stop-color='%239ac19c'/%3E%3Cstop offset='1' stop-color='%239ac19c' stop-opacity='0'/%3E%3C/radialGradient%3E%3CradialGradient id='c' cx='600' cy='0' r='600' gradientUnits='userSpaceOnUse'%3E%3Cstop offset='0' stop-color='%23c8d6b9'/%3E%3Cstop offset='1' stop-color='%23c8d6b9' stop-opacity='0'/%3E%3C/radialGradient%3E%3CradialGradient id='d' cx='600' cy='800' r='600' gradientUnits='userSpaceOnUse'%3E%3Cstop offset='0' stop-color='%237CAA98'/%3E%3Cstop offset='1' stop-color='%237CAA98' stop-opacity='0'/%3E%3C/radialGradient%3E%3CradialGradient id='e' cx='0' cy='0' r='800' gradientUnits='userSpaceOnUse'%3E%3Cstop offset='0' stop-color='%23C8D6B9'/%3E%3Cstop offset='1' stop-color='%23C8D6B9' stop-opacity='0'/%3E%3C/radialGradient%3E%3CradialGradient id='f' cx='1200' cy='0' r='800' gradientUnits='userSpaceOnUse'%3E%3Cstop offset='0' stop-color='%23C8D6B9'/%3E%3Cstop offset='1' stop-color='%23C8D6B9' stop-opacity='0'/%3E%3C/radialGradient%3E%3C/defs%3E%3Crect fill='url(%23a)' width='1200' height='800'/%3E%3Crect fill='url(%23b)' width='1200' height='800'/%3E%3Crect fill='url(%23c)' width='1200' height='800'/%3E%3Crect fill='url(%23d)' width='1200' height='800'/%3E%3Crect fill='url(%23e)' width='1200' height='800'/%3E%3Crect fill='url(%23f)' width='1200' height='800'/%3E%3C/svg%3E");
@@ -131,9 +131,9 @@
     }
 
     .imagen {
-        width: 800px;
-        height: 480px;
-        margin-top: 0px;
+        width: 700px;
+        height: 400px;
+        margin-top: 45px;
         margin-left: 100px;
     }
 
@@ -149,11 +149,12 @@
 </style>
 
 <div class="container">
+    <a href="https://onefootball.com/es/noticias/segun-marca-luis-enrique-medita-dejar-el-psg-37970829">
     <img class="imagen" src="{{ url_for('static', filename='LuisEnrique.jpg') }}" alt="Logo de la App">
-
+    </a>
     <div class="tex">
-        <p>
-            SEGÚN MARCA: ¡LUIS ENRIQUE MEDITA DEJAR EL PSG!
+        <p
+            align="justify">SEGÚN MARCA: ¡LUIS ENRIQUE MEDITA DEJAR EL PSG!
             París estaría cerca de vivir un escándalo,
             por el ambiente que se vive alrededor de las decisiones sobre Mbappé.
             Marca suelta una bomba este jueves, pues informa que Luis Enrique estaría...
@@ -171,21 +172,21 @@
         width: 420px;
         height: 300px;
         margin-top: 80px;
-        margin-left: 80px;
+        margin-left: 35px;
     }
 
     .iman2 {
         width: 420px;
         height: 300px;
         margin-top: 80px;
-        margin-left: 80px;
+        margin-left: 40px;
     }
 
     .iman3 {
         width: 420px;
         height: 300px;
         margin-top: 80px;
-        margin-left: -20px;
+        margin-left: -40px;
     }
 
     .text1 {
@@ -193,7 +194,7 @@
         color: #000400;
         font-size: 20px;
         padding: 75px;
-        margin-top: -40px;
+        margin-top: -50px;
         margin-left: 10px;
     }
 
@@ -202,7 +203,7 @@
         color: #000400;
         font-size: 20px;
         padding: 75px;
-        margin-top: -40px;
+        margin-top: -50px;
         margin-left: 10px;
     }
 
@@ -211,7 +212,7 @@
         color: #000400;
         font-size: 20px;
         padding: 75px;
-        margin-top: -40px;
+        margin-top: -50px;
         margin-left: -60px;
     }
 
@@ -220,21 +221,27 @@
 
 <div class="im">
     <div>
+        <a href="https://onefootball.com/es/noticias/que-bonito-apellido-guardiola-confirma-el-nuevo-fichaje-del-city-37974523">
         <img class="iman1" src="{{ url_for('static', filename='Guardiola.jpg') }}">
+        </a>
         <p class="text1">
             Guardiola confirma el nuevo FICHAJE del City.
         </p>
     </div>
 
     <div>
+        <a href="https://onefootball.com/fr/news/fichajes-en-vivo-kane-horas-cruciales-gvardiol-pasa-reconocimiento-37973380">
         <img class="iman2" src="{{ url_for('static', filename='Kane.jpg') }}">
+            </a>
         <p class="text2">
             Fichajes EN VIVO: Kane, horas cruciales: Gvardiol pasa reconocimiento.
         </p>
     </div>
 
     <div>
+        <a href="https://onefootball.com/es/noticias/hasta-2026-xabi-alonso-renueva-con-el-bayer-leverkusen-37974593">
         <img class="iman3" src="{{ url_for('static', filename='Xavi.jpg') }}">
+            </a>
         <p class="text3">
             OFICIAL: ¡Xabi Alonso renueva con el Bayer Leverkusen!
         </p>

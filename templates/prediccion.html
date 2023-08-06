@@ -5,7 +5,7 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>PREDICCIÓN</title>
+    <title>LIGAS</title>
 </head>
 <body>
 
@@ -90,9 +90,9 @@
     <label class="bienvenido">RendFUT</label>
     <ul class="menu">
         <li class="li">
-            <a href="/dashboard" method="get">Home</a>
+            <a href="/dashboard" method="get">Inicio</a>
             <a href="/informacion" method="get">Información</a>
-            <a id="prediccion-form" href="/prediccion" method="get">Predicción</a>
+            <a id="prediccion-form" href="/prediccion" method="get">Partidos</a>
         </li>
     </ul>
 
@@ -120,7 +120,7 @@
     }
 </style>
 
-<h1 class="pred">PÁGINA DE PREDICCIÓN</h1>
+<h1 class="pred">LIGAS DISPONIBLES</h1>
 
 <style>
     .btnequipos {
@@ -162,7 +162,7 @@
 </style>
 
 <div class="liga" id="champions-league-info"></div>
-<button class="btnequipos" type="button" onclick="obtenerEquipos()"><span>Equipo</span></button>
+<!--<button class="btnequipos" type="button" onclick="obtenerEquipos()"><span>Equipo</span></button>-->
 
 <!-- ELEGIR LIGAS -->
 <style>
@@ -182,8 +182,27 @@
 
 </div>
 
+<!-- En la sección del formulario, debajo de la lista de equipos -->
+<form id="grupo-form" method="post">
+    <label for="grupo-a">Grupo A:</label>
+    <select name="grupo-a" id="grupo-a">
+        <!-- Aquí generaremos las opciones con JavaScript al cargar la página -->
+    </select>
+
+    <label for="grupo-b">Grupo B:</label>
+    <select name="grupo-b" id="grupo-b">
+        <!-- Aquí generaremos las opciones con JavaScript al cargar la página -->
+    </select>
+
+    <!-- Agregar más grupos aquí si es necesario -->
+
+    <button type="submit">Generar Grupos</button>
+</form>
+
+<div id="grupos-info"></div>
+
+
 <script>
-    // ... código JavaScript previo ...
 
     // Obtener la información de la liga Champions League
     function obtenerChampionsLeague() {
@@ -245,15 +264,83 @@
         // Vaciar la lista de equipos antes de mostrar los nuevos
         equiposInfo.innerHTML = '';
 
-        // Mostrar los equipos en la lista
-        const listaEquipos = document.createElement('ul');
+         // Mostrar los equipos en la lista
         equipos.forEach(function (equipo) {
-            const li = document.createElement('li');
-            li.textContent = `${equipo.name} (ID: ${equipo.id})`;
-            listaEquipos.appendChild(li);
+            const optionA = document.createElement('option');
+            optionA.value = equipo.id;
+            optionA.textContent = equipo.name;
+            document.getElementById('grupo-a').appendChild(optionA);
+
+            const optionB = document.createElement('option');
+            optionB.value = equipo.id;
+            optionB.textContent = equipo.name;
+            document.getElementById('grupo-b').appendChild(optionB);
         });
-        equiposInfo.appendChild(listaEquipos);
     }
+
+    // Llamar a la función para obtener los equipos de la liga Champions League al cargar la página
+    window.onload = function () {
+        obtenerChampionsLeague();
+        obtenerEquipos(); // Agregar esta línea para obtener los equipos al cargar la página
+    };
+
+    //GENERAR GRUPOS SCRIPT
+
+    const form = document.getElementById('grupo-form');
+    form.addEventListener('submit', function (event) {
+        event.preventDefault();
+        generarGrupos();
+    });
+
+    function shuffleArray(array) {
+        // Función para mezclar un array usando el algoritmo de Fisher-Yates
+        for (let i = array.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [array[i], array[j]] = [array[j], array[i]];
+        }
+    }
+    function generarGrupos() {
+        const xhr = new XMLHttpRequest();
+        const url = '/generar_grupos';
+
+        const formData = new FormData(form);
+        xhr.open('POST', url);
+        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        xhr.onload = function () {
+            if (xhr.status === 200) {
+                const grupos = JSON.parse(xhr.responseText);
+                mostrarGrupos(grupos);
+            } else {
+                alert('Error al generar los grupos. Por favor, inténtalo nuevamente más tarde.');
+            }
+        };
+        xhr.send(new URLSearchParams(formData));
+    }
+
+    function mostrarGrupos(grupos) {
+        // Obtener el elemento del DOM donde mostraremos los grupos
+        const gruposInfo = document.getElementById('grupos-info');
+
+        // Vaciar la lista de grupos antes de mostrar los nuevos
+        gruposInfo.innerHTML = '';
+
+        // Mostrar los grupos en la página
+        for (const [nombreGrupo, equiposGrupo] of Object.entries(grupos)) {
+            // Mezclar aleatoriamente los equipos antes de dividirlos en 4 por grupo
+            shuffleArray(equiposGrupo);
+            const equiposPorGrupo = equiposGrupo.slice(0, 4);
+
+            const grupoElement = document.createElement('div');
+            grupoElement.className = 'grupo';
+            grupoElement.innerHTML = `<h2>${nombreGrupo}</h2><ul>${equiposPorGrupo.map(equipo => `<li>${equipo}</li>`).join('')}</ul>`;
+            gruposInfo.appendChild(grupoElement);
+        }
+    }
+    //ACABA GRUPOS
+
+
+
+
 </script>
 </body>
 </html>
